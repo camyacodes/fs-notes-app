@@ -1,0 +1,44 @@
+{
+  "notes": [
+    {
+      "id": "1",
+      "content": "HTML is easy",
+      "important": true
+    },
+    {
+      "id": "2",
+      "content": "Browser can execute only JavaScript",
+      "important": false
+    },
+    {
+      "id": "3",
+      "content": "GET and POST are the most important methods of HTTP protocol",
+      "important": false
+    },
+    {
+      "id": "c583",
+      "content": "note is added using axios post req",
+      "important": true
+    },
+    {
+      "id": "cfd9",
+      "content": "use network tab",
+      "important": true
+    },
+    {
+      "id": "9338",
+      "content": "update notes on addnote",
+      "important": false
+    },
+    {
+      "id": "16d6",
+      "content": "noteService test",
+      "important": false
+    },
+    {
+      "id": "265c",
+      "content": "success test",
+      "important": false
+    }
+  ]
+}
