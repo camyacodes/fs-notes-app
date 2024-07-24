@@ -113,9 +113,5 @@ describe('when there is initially some notes saved', () => {
 
 after(async () => {
   await mongoose.connection.close()
-})
-
-after(async () => {
-  await mongoose.connection.close()
   await config.stopDb()
 })
