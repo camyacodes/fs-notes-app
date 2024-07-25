@@ -12,9 +12,7 @@ loginRouter.post('/', async (request, response) => {
     user === null ? false : await bcrypt.compare(password, user.passwordHash)
   // If the user is not found, or the password is incorrect
   if (!(user && passwordCorrect)) {
-    return response.status(401).json({
-      error: 'invalid username or password',
-    })
+    return response.status(401).json({ error: 'invalid username or password' })
   }
   // a token is created with the method jwt.sign. The token contains the username and the user id in a digitally signed form.
   const userForToken = {
