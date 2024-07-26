@@ -150,7 +150,8 @@ const App = () => {
     <div>
       <h1>Notes</h1>
       <Notification message={message} type={type} />
-
+      {/* Display the login form only when appropriate */}
+      {/* if the user is logged in then the user is not null and we can hide form */}
       {user === null ? (
         loginForm()
       ) : (
