@@ -48,18 +48,20 @@ notesRouter.post('/', async (request, response) => {
 })
 
 // Change existing note
-notesRouter.put('/:id', (request, response, next) => {
+notesRouter.put('/:id', async (request, response) => {
   const { content, important } = request.body
 
-  Note.findByIdAndUpdate(
+  const updatedNote = await Note.findByIdAndUpdate(
     request.params.id,
     { content, important },
     { new: true, runValidators: true, context: 'query' }
   )
-    .then((updatedNote) => {
-      response.json(updatedNote)
-    })
-    .catch((error) => next(error))
+  // if not is already deleted from the db return error
+  if (updatedNote) {
+    response.json(updatedNote)
+  } else {
+    response.status(404).json({ error: 'Note not found' })
+  }
 })
 
 // delete note

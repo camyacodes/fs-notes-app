@@ -13,8 +13,6 @@ const App = () => {
   const [showAll, setShowAll] = useState(true) // Boolean to control visibility of all or important notes
   const [message, setMessage] = useState(null) // Notification message
   const [type, setType] = useState(null) // Type of notification (success or error)
-  const [username, setUsername] = useState('') // Username input for login
-  const [password, setPassword] = useState('') // Password input for login
   const [user, setUser] = useState(null) // Logged-in user information
 
   // Fetch all notes when component mounts or page refreshes or react app restarts
@@ -42,10 +40,19 @@ const App = () => {
     ? noteArr
     : noteArr.filter((note) => note.important)
 
+  // Notification Message function to display error and success messages
+  // Takes type and message and sets time out
+  const logMsg = (type, error) => {
+    setType(type)
+    setMessage(error)
+    setTimeout(() => {
+      setMessage(null)
+      setType(null)
+    }, 5000)
+  }
+
   // Function to add a new note
   const addNote = (noteObject) => {
-    // prevent automatic reload
-    event.preventDefault()
     // send post request to backend api using service
     // noteObject comes from NoteForm component
     noteService
@@ -54,21 +61,11 @@ const App = () => {
       .then((returnedNote) => {
         // Add to the notes Arr
         setNotesArr(noteArr.concat(returnedNote))
-        // Log sucess message for 5 secs
-        setType('Added')
-        setMessage(`Added "${returnedNote.content}"`)
-        setTimeout(() => {
-          setMessage(null)
-          setType(null)
-        }, 5000)
+        // Log sucess message
+        logMsg('Added', `Added "${returnedNote.content}`)
       })
       .catch((error) => {
-        setType('Error')
-        setMessage(`${error.response.data.error}"`)
-        setTimeout(() => {
-          setMessage(null)
-          setType(null)
-        }, 5000)
+        logMsg('Error', `${error.response.data.error}`)
       })
   }
 
@@ -87,21 +84,15 @@ const App = () => {
         setNotesArr(noteArr.map((n) => (n.id !== id ? n : returnedNote)))
       })
       // eslint-disable-next-line no-unused-vars
-      .catch((exception) => {
+      .catch((error) => {
         // If there is an error, it is because the note does not exist
-        setType('Error')
-        setMessage(`Note "${note.content}" was already removed from server`)
-        setTimeout(() => {
-          setMessage(null)
-          setType(null)
-        }, 5000)
+        logMsg('Error', `${error.response.data.error}`)
         setNotesArr(noteArr.filter((n) => n.id !== id))
       })
   }
 
   // Function to handle login
-  const handleLogin = async (event) => {
-    event.preventDefault()
+  const handleLogin = async (username, password) => {
     // login user using login service that sends post req to backend login route
     try {
       // get user that is sent back with response
@@ -110,19 +101,12 @@ const App = () => {
       // use JSON.stringify to convert JavaScript objects to strings for local storage, and JSON.parse to convert them back to objects when retrieving.
       window.localStorage.setItem('loggedNoteAppUser', JSON.stringify(user))
       // use service to set token for the App while the user is logged in.
-      // This will attach the token to the post request made by user that is need to verify the req and to make sure the created note goes with specific user
+      // This will attach the token to the post request made by user that is needed to verify the req and to make sure the created note goes with specific user
       noteService.setToken(user.token)
       // set the user as the user for the state
       setUser(user)
-      // reset form
-      setUsername('')
-      setPassword('')
     } catch (exception) {
-      setType('Error')
-      setMessage('Wrong credentials')
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
+      logMsg('Error', 'Wrong credentials')
     }
   }
 
@@ -130,10 +114,8 @@ const App = () => {
   const loginForm = () => (
     <Togglable buttonLabel='login'>
       <LoginForm
-        username={username}
-        password={password}
-        handleUsernameChange={({ target }) => setUsername(target.value)}
-        handlePasswordChange={({ target }) => setPassword(target.value)}
+        // handleUsernameChange={({ target }) => setUsername(target.value)}
+        // handlePasswordChange={({ target }) => setPassword(target.value)}
         handleSubmit={handleLogin}
       />
     </Togglable>

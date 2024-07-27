@@ -5,7 +5,7 @@ const Togglable = (props) => {
   // visible state only needs to be used by this component so its seperated
   const [visible, setVisible] = useState(false)
 
-  // these effect the inline style to either show or hide the childe component
+  // these effect the inline style to either show or hide the child component
   // Creates an object hideWhenVisible with a display style property that is set to 'none' when visible is true,
   // otherwise it's an empty string (showing the element)
   const hideWhenVisible = { display: visible ? 'none' : '' }
@@ -21,11 +21,12 @@ const Togglable = (props) => {
   return (
     <div>
       {/* for example newNote button of note form */}
-      {/*  originally it shows because is false and so there is not display line arg*/}
+      {/*  originally it shows because visibility is false and so there is no display line arg*/}
       <div style={hideWhenVisible}>
-        {/* once clicked visibility for noteform is true, hiding the button */}
+        {/* once clicked visibility for noteform is true, hiding the button... */}
         <button onClick={toggleVisibility}>{props.buttonLabel}</button>
       </div>
+      {/* AND showing the form */}
       {/* the form is originally hidden bc visibility is false */}
       <div style={showWhenVisible}>
         {props.children}
