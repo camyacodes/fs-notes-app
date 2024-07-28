@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
-// The state and all the functions related to it are defined outside of the component and are passed to the component as props
+import PropTypes from 'prop-types'
 const LoginForm = ({ handleSubmit }) => {
   // lifted up state to this component bc it only needs these variables
   const [username, setUsername] = useState('') // Username input for login
@@ -38,6 +38,10 @@ const LoginForm = ({ handleSubmit }) => {
       <button type='submit'>login</button>
     </form>
   )
+}
+
+LoginForm.proptypes = {
+  handleSubmit: PropTypes.func.isRequired,
 }
 
 export default LoginForm

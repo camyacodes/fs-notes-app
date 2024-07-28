@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState, forwardRef, useImperativeHandle } from 'react'
 
+import PropTypes from 'prop-types'
+
 const Togglable = forwardRef((props, refs) => {
   // visible state only needs to be used by this component so its seperated
   const [visible, setVisible] = useState(false)
@@ -48,7 +50,10 @@ const Togglable = forwardRef((props, refs) => {
 // The eslint rule react/display-name requires that components have a display name.
 // This is particularly important for debugging and developer tools, as it helps to identify components.
 // When you use forwardRef, the component is wrapped, and the resulting component does not have a display name by default.
-
 Togglable.displayName = 'Togglable'
+
+Togglable.propTypes = {
+  buttonLabel: PropTypes.string.isRequired,
+}
 
 export default Togglable
