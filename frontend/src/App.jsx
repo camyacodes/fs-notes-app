@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import noteService from './services/notes' // Service for handling notes API requests
 import loginService from './services/login' // Service for handling login API requests
 import Note from './components/Note' // Component to display individual notes
@@ -14,6 +14,8 @@ const App = () => {
   const [message, setMessage] = useState(null) // Notification message
   const [type, setType] = useState(null) // Type of notification (success or error)
   const [user, setUser] = useState(null) // Logged-in user information
+  // useRef hook is used to create a noteFormRef reference
+  const noteFormRef = useRef()
 
   // Fetch all notes when component mounts or page refreshes or react app restarts
   // useEffect lets you run some code after rendering so that you can synchronize your component with some system outside of React.
@@ -53,6 +55,7 @@ const App = () => {
 
   // Function to add a new note
   const addNote = (noteObject) => {
+    noteFormRef.current.toggleVisibility()
     // send post request to backend api using service
     // noteObject comes from NoteForm component
     noteService
@@ -123,7 +126,9 @@ const App = () => {
 
   // Function to render the note form
   const noteForm = () => (
-    <Togglable buttonLabel='new note'>
+    // The noteFormRef variable acts as a reference to the component.
+    // This hook ensures the same reference (ref) that is kept throughout re-renders of the component.
+    <Togglable buttonLabel='new note' ref={noteFormRef}>
       <NoteForm createNote={addNote} />
     </Togglable>
   )

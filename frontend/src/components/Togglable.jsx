@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react'
+import { useState, forwardRef, useImperativeHandle } from 'react'
 
-const Togglable = (props) => {
+const Togglable = forwardRef((props, refs) => {
   // visible state only needs to be used by this component so its seperated
   const [visible, setVisible] = useState(false)
 
-  // these effect the inline style to either show or hide the child component
+  // Style objects to show/hide elements based on visibility state
   // Creates an object hideWhenVisible with a display style property that is set to 'none' when visible is true,
   // otherwise it's an empty string (showing the element)
   const hideWhenVisible = { display: visible ? 'none' : '' }
@@ -17,6 +17,13 @@ const Togglable = (props) => {
   const toggleVisibility = () => {
     setVisible(!visible)
   }
+
+  // expose the toggle visibility function to the parent component so it can be used there
+  useImperativeHandle(refs, () => {
+    return {
+      toggleVisibility,
+    }
+  })
 
   return (
     <div>
@@ -36,6 +43,12 @@ const Togglable = (props) => {
       </div>
     </div>
   )
-}
+})
+
+// The eslint rule react/display-name requires that components have a display name.
+// This is particularly important for debugging and developer tools, as it helps to identify components.
+// When you use forwardRef, the component is wrapped, and the resulting component does not have a display name by default.
+
+Togglable.displayName = 'Togglable'
 
 export default Togglable
