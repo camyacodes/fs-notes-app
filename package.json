@@ -8,6 +8,7 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "lint": "eslint .",
+    "start:test": "NODE_ENV=test node index.js",
     "format": "prettier-eslint \"src/**/*.js\""
   },
   "author": "Mya",
@@ -28,7 +29,9 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.6.0",
+    "@playwright/test": "^1.45.3",
     "@stylistic/eslint-plugin-js": "^2.3.0",
+    "@types/node": "^20.14.12",
     "eslint": "^8.57.0",
     "globals": "^15.8.0",
     "nodemon": "^3.1.4",
