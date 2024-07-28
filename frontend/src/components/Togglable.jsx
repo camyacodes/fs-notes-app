@@ -37,7 +37,7 @@ const Togglable = forwardRef((props, refs) => {
       </div>
       {/* AND showing the form */}
       {/* the form is originally hidden bc visibility is false */}
-      <div style={showWhenVisible}>
+      <div style={showWhenVisible} className='togglableContent'>
         {props.children}
         {/* cancel button is revealed from visibility is true and form is revealed*/}
         {/* when clicked visibility goes back to false and form is hidden */}
