@@ -65,7 +65,7 @@ const App = () => {
         // Add to the notes Arr
         setNotesArr(noteArr.concat(returnedNote))
         // Log sucess message
-        logMsg('Added', `Added "${returnedNote.content}`)
+        logMsg('Added', `Added '${returnedNote.content}'`)
       })
       .catch((error) => {
         logMsg('Error', `${error.response.data.error}`)
@@ -163,6 +163,9 @@ const App = () => {
           />
         ))}
       </ul>
+      <footer style={{ color: 'green' }}>
+        <em>Note App, camyacodes, 2024</em>
+      </footer>
     </div>
   )
 }
